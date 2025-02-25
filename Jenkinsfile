@@ -6,10 +6,16 @@ pipeline {
     }
 
     stages {
+        stage('Cleanup Workspace') {
+            steps {
+                sh 'rm -rf *'  // Deletes everything in the workspace before cloning
+            }
+        }
+
         stage('Checkout Code') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'github-access', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
-                    sh 'git clone https://$GIT_USERNAME:$GIT_PASSWORD@github.com/RaviSavaliya/my-node-app.git .'
+                    sh 'git clone https://$GIT_USERNAME:$GIT_PASSWORD@github.com/RaviSavaliya07/my-node-app.git .'
                 }
             }
         }
