@@ -8,8 +8,8 @@ pipeline {
     stages {
         stage('Cleanup Workspace') {
             steps {
-                deleteDir()  // Jenkins built-in function to fully delete the workspace
-                sh 'rm -rf /var/lib/jenkins/workspace/Docker\ Build\ Pipeline/*'  // Ensure full cleanup
+                deleteDir()  // Jenkins built-in function to delete the workspace
+                sh 'rm -rf "/var/lib/jenkins/workspace/Docker Build Pipeline/*"'  // Corrected syntax
             }
         }
 
@@ -53,4 +53,3 @@ pipeline {
         }
     }
 }
-
