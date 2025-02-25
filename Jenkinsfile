@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                git branch: 'main', url: 'https://github.com/RaviSavaliya07/my-node-app.git'
+                git branch: 'main', url: 'https://github.com/RaviSavaliya/my-node-app.git'
             }
         }
 
@@ -32,9 +32,14 @@ pipeline {
             }
         }
 
-        stage('Cleanup') {
+        stage('Deploy on Local EC2') {
             steps {
-                sh 'docker rmi $DOCKER_IMAGE'
+                sh '''
+                docker pull $DOCKER_IMAGE
+                docker stop my-node-app || true
+                docker rm my-node-app || true
+                docker run -d -p 3000:3000 --name my-node-app $DOCKER_IMAGE
+                '''
             }
         }
     }
