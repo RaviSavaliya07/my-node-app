@@ -8,7 +8,9 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                git branch: 'main', url: 'https://github.com/RaviSavaliya/my-node-app.git'
+                withCredentials([usernamePassword(credentialsId: 'github-access', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
+                    sh 'git clone https://$GIT_USERNAME:$GIT_PASSWORD@github.com/RaviSavaliya/my-node-app.git .'
+                }
             }
         }
 
